@@ -11,7 +11,6 @@ app.use(express.json());
 * DELETE /notes/:id
 */
 
-
 //GET /notes
 app.get("/notes",async (req,res)=>{
     let data = await noteModel.find();
@@ -33,14 +32,20 @@ app.post("/notes",async (req,res)=>{
 })
 //PATCH /notes/:id
 app.patch("/notes/:id", async (req,res)=>{
-    let id = req.params;
-    await noteModel.findByIdAndUpdate({})
+    let {id} = req.params;
+    let data = req.body;
+    await noteModel.findByIdAndUpdate(id,{
+        title : data.title,
+        description : data.description
+    })
+    res.status(200).json({
+        message : "update succesfully"
+    })
 })
 //DELETE /notes/:id
 app.delete("/notes/:id",async (req,res)=>{
-    let id = req.params;
-    console.log(id);
-    await noteModel.findByIdAndDelete(id.id);
+    let {id} = req.params;
+    await noteModel.findByIdAndDelete(id);
     res.status(204).json({
         message : "Deleted Successfully"
     })
