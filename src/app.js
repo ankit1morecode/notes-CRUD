@@ -14,9 +14,10 @@ app.use(express.json());
 //GET /notes
 app.get("/notes",async (req,res)=>{
     let data = await noteModel.find();
-    console.log(data);
-    res.status(202).json({
-        message : "data fetched"   
+    // console.log(data);
+    res.status(200).json({
+        message : "data fetched",
+        notes : data
     });
 })
 //POST /notes
